@@ -10,7 +10,7 @@ module.exports = function(req, res, next){
     }
 
     try {
-        const decoded = jwt.verify(JSON.parse(token), process.env.SECRETKEY);
+        const decoded = jwt.verify(JSON.parse(token), process.env.SECRETKEY || process.env.ADMINSECRET);
         console.log("decoded", decoded)
         console.log("req.user", req.user)
 
