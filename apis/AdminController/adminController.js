@@ -1,15 +1,18 @@
 const bodyParser = require("body-parser");
 const adminModel = require("../models/adminSchema");
-// const socialData = require("../models/userSocialData");
-// const vendors = require("../models/associated_vendor");
+const userModel = require("../models/userSchema");
+const socialData = require("../models/userSocialData");
+const vendors = require("../models/associated_vendor");
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
+const { Mongoose } = require("mongoose");
 
 module.exports = {
   registerAdmin: registerAdmin,
   adminLogin: adminLogin,
-  loggedInUser:loggedInUser
+  loggedInUser: loggedInUser,
   //   loggedInUser:loggedInUser
+  assingVendorToUser: assingVendorToUser,
 };
 
 async function registerAdmin(req, res) {
@@ -70,7 +73,7 @@ async function adminLogin(req, res) {
           id: checkUser.id,
         },
       };
-      console.log(process.env.SECRETKEY)
+      console.log(process.env.SECRETKEY);
       const token = jwt.sign(
         payload,
         process.env.SECRETKEY,
@@ -90,15 +93,41 @@ async function adminLogin(req, res) {
   }
 }
 
-async function loggedInUser(req, res){
-    try {
-        // request.user is getting fetched from Middleware after token authentication
-        const user = await adminModel.findById(req.user.id);
-        res.json({
-          message: `User has been fetched of id ${req.user.id}`,
-          data: user,
-        });
-      } catch (e) {
-        res.send({ message: "Error in Fetching user" });
+async function loggedInUser(req, res) {
+  try {
+    // request.user is getting fetched from Middleware after token authentication
+    const user = await adminModel.findById(req.user.id);
+    res.json({
+      message: `User has been fetched of id ${req.user.id}`,
+      data: user,
+    });
+  } catch (e) {
+    res.send({ message: "Error in Fetching user" });
+  }
+}
+
+async function assingVendorToUser(req, res) {
+  try {
+    let vendor = await vendors.findOne({ _id: req.body.vendor_id });
+
+     userModel.updateOne(
+      {
+        _id: req.body._id,
+      },
+      {
+        $set: { vendor_id: vendor._id },
+      },
+      {
+        upsert: true,
       }
+    , (err, response)=>{
+        if(err){
+            return err
+        }else{
+            res.status(200).json({message:"Vendor Assigned to user", response})
+        }
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
 }
