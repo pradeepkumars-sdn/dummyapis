@@ -8,5 +8,23 @@
     "mongoose": "^6.4.2",
     "nodemailer": "^6.7.6",
     "nodemon": "^2.0.18"
-  }
+  },
+  "name": "dummyapis",
+  "description": "",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pradeepkumars-sdn/dummyapis.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pradeepkumars-sdn/dummyapis/issues"
+  },
+  "homepage": "https://github.com/pradeepkumars-sdn/dummyapis#readme"
 }
