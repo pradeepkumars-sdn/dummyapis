@@ -44,7 +44,7 @@ async function userSocialData(req, res){
 
 async function create_vendor(req, res){
     try{
-       let checkMail = await vendors.findOne({vendorEmail:req.body.vendorEmail,vendorName: req.body.vendorName})
+       let checkMail = await vendors.findOne({vendorEmail:req.body.vendorEmail})
        
        if(!checkMail){
 
@@ -81,7 +81,7 @@ async function create_vendor(req, res){
 async function update_vendor(req, res){
 try{
     
-    await vendors.findByIdAndUpdate({_id:req.body._id},  {$set:{vendorName:req.body.vendorName}},{upsert:true}, (err, result)=>{
+    await vendors.findByIdAndUpdate({_id:req.body._id},  {$set:{vendorName:req.body.vendorName, vendorAddress: req.body.vendorAddress}},{upsert:true}, (err, result)=>{
         if(!err){
             res.status({message:"Vendor Updated Successfully", result})
         }else{
