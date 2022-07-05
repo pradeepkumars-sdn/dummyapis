@@ -142,7 +142,8 @@ async function update_vendor(req, res) {
 }
 
 async function update_user(req, res) {
-  let user_id = req.body._id;
+  let user_id = req.user.id;
+  console.log(user_id)
   userModel.findOneAndUpdate(
     {
       _id: user_id,
@@ -175,7 +176,7 @@ async function update_user(req, res) {
 
 async function delete_user(req, res) {
   try {
-    let user_id = req.body._id;
+    let user_id = req.user.id;
 
     userModel.findOneAndDelete(
       {
