@@ -44,7 +44,7 @@ async function userSocialData(req, res){
 
 async function create_vendor(req, res){
     try{
-       let checkMail = await vendors.findOne({vendorEmail:req.body.vendorEmail})
+       let checkMail = await vendors.findOne({vendorEmail:req.body.vendorEmail,vendorName: req.body.vendorName})
        
        if(!checkMail){
 
