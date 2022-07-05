@@ -23,7 +23,14 @@ let vendors = new schema(
         type: String,
         required:true
       },
-
+    //   shops:[
+    //       {
+              shop_id:{
+                type: mongoose.Types.ObjectId,
+                ref: "shops",
+              }
+    //       }
+    //   ]
       
 
     //   interest:[
