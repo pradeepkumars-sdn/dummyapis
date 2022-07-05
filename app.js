@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
-var uri = process.env.DBURL;
+var uri = "mongodb://localhost:27017/dummyapis";
 mongoose.connect(uri, {useUnifiedTopology:true, useNewUrlParser:true});
 
 var db = mongoose.connection;
