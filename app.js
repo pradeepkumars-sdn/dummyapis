@@ -31,7 +31,11 @@ db.once('open', (req, res)=>
 
 // require routes 
 const routes = require('./apis/routes/userRoutes')
+const productsRoute = require('./apis/routes/productRoute')
+
 app.use('/api', routes)
+app.use('/api', productsRoute)
+
 
 
 
