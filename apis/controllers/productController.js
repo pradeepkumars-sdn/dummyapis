@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
-const userModel = require("../models/userSchema");
-const socialData = require("../models/userSocialData");
-const vendors = require("../models/associated_vendor");
+// const userModel = require("../models/userSchema");
+// const socialData = require("../models/userSocialData");
+// const vendors = require("../models/associated_vendor");
 const shopModel = require('../models/shopSchema')
 
 module.exports = {
@@ -33,8 +33,8 @@ async function add_shop(req, res){
         shopData.shopAddress = req.body.shopAddress;
         shopData.registration_number = req.body.registration_number
         shopData.registration_year = req.body.registration_year;
-        shopData.shop_unique_code = unique_id
-
+        shopData.shop_unique_code = unique_id;
+        shopData.vendor_id = req.body.vendor_id
         await shopData.save().then((err, response)=>{
             if(err){
                 res.status(201).json(err)
