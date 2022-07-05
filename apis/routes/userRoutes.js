@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const userController = require('../controllers/userController')
+const auth = require('../_helper/auth')
 
 
 router.post('/register',userController.register )
@@ -11,6 +12,7 @@ router.post('/update-user', userController.update_user)
 router.delete('/delete-user', userController.delete_user)
 router.delete('/delete-vendor', userController.delete_vendor)
 router.post('/login', userController.login)
+router.get('/profile', auth, userController.loggedInUser)
 
 
 
