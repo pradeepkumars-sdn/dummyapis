@@ -30,6 +30,11 @@ let shops = new schema(
         vendor_id:{
             type: mongoose.Types.ObjectId,
             ref: "vendors",
+        },
+
+        is_deleted:{
+            type:Boolean,
+            default:false
         }
        
        
