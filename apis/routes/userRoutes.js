@@ -10,6 +10,8 @@ router.post('/update-vendor', userController.update_vendor)
 router.post('/update-user', userController.update_user)
 router.delete('/delete-user', userController.delete_user)
 router.delete('/delete-vendor', userController.delete_vendor)
+router.post('/login', userController.login)
+
 
 
 
