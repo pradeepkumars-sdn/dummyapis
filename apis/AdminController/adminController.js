@@ -16,6 +16,7 @@ module.exports = {
   //   loggedInUser:loggedInUser
   assingVendorToUser: assingVendorToUser,
   assignShopToVendor: assignShopToVendor,
+  vendorList:vendorList
 };
 
 async function registerAdmin(req, res) {
@@ -165,4 +166,53 @@ async function assignShopToVendor(req, res) {
   } catch (error) {
     res.status(501).json(error);
   }
+}
+
+async function vendorList(req,res){
+ try{
+  // let userList = await userModel.find({})
+
+  let vendorList = await vendors.aggregate([
+    {
+      $lookup:{
+        from:"user",
+        localField:"_id",
+        foreignField:"vendor_id",
+        as : "Assigned_User"
+      }
+    }
+
+  ])
+  // let newData = []
+  // vendorList.map(x =>{
+    
+  //   newData.push({
+  //     vendorName:x.vendorName,
+  //     vendorAddress: x.vendorAddress,
+  //     contact:x.contact,
+      
+     
+  //   })
+   
+  //   x.Assigned_User.map(y=>{
+  //     newData.push({
+  //       assignedUserName:y.name,
+  //       assignedUserMobile:y.mobile,
+  //       assignedUserEmail:y.email
+
+  //     })
+  //   })
+  // })
+  if(vendorList.length>0){
+    res.status(200).json({message:"Vendor Fetched", Result:vendorList })
+  }else{
+    res.status(202).json("Something went wrong")
+
+  }
+ }
+ catch(error){
+   console.log(error)
+  res.status(501).json(error)
+
+ }
 }
