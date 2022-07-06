@@ -183,28 +183,34 @@ async function vendorList(req,res){
     }
 
   ])
-  // let newData = []
-  // vendorList.map(x =>{
+  let newData = []
+  vendorList.map(x =>{
+    x.Assigned_User.map(y=>{
+      newData.push({
+          vendorName:x.vendorName,
+         vendorAddress: x.vendorAddress,
+         contact:x.contact,
+          AssignedUserName:y.name,
+          AssignedUserEmail: y.email,
+          assignedusercontact:y.mobile
+
+
+      })
+    })
+
+    console.log(newData)
     
-  //   newData.push({
-  //     vendorName:x.vendorName,
-  //     vendorAddress: x.vendorAddress,
-  //     contact:x.contact,
+    // newData.push({
+    //   vendorName:x.vendorName,
+    //   vendorAddress: x.vendorAddress,
+    //   contact:x.contact,
       
      
-  //   })
+    // })
    
-  //   x.Assigned_User.map(y=>{
-  //     newData.push({
-  //       assignedUserName:y.name,
-  //       assignedUserMobile:y.mobile,
-  //       assignedUserEmail:y.email
-
-  //     })
-  //   })
-  // })
+  })
   if(vendorList.length>0){
-    res.status(200).json({message:"Vendor Fetched", Result:vendorList })
+    res.status(200).json({message:"Vendor Fetched", Result:newData })
   }else{
     res.status(202).json("Something went wrong")
 
