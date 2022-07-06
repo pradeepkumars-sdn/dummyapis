@@ -26,10 +26,19 @@ let user = new schema(
     country: {
       type: String,
     },
-    vendor_id: {
-        type: mongoose.Types.ObjectId,
-            ref: "vendors",
-      },
+    // vendor_id: {
+    //     type: mongoose.Types.ObjectId,
+    //         ref: "vendors",
+    //   },
+
+    vendors:[
+      {
+        vendor_id: {
+          type: mongoose.Types.ObjectId,
+          ref: "vendors",
+        }
+      }
+    ]
   },
   {
     collection: "user",

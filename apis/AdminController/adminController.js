@@ -15,7 +15,7 @@ module.exports = {
   loggedInUser: loggedInUser,
   //   loggedInUser:loggedInUser
   assingVendorToUser: assingVendorToUser,
-  assignShopToVendor:assignShopToVendor
+  assignShopToVendor: assignShopToVendor,
 };
 
 async function registerAdmin(req, res) {
@@ -113,48 +113,56 @@ async function assingVendorToUser(req, res) {
   try {
     let vendor = await vendors.findOne({ _id: req.body.vendor_id });
 
-     userModel.updateOne(
+    userModel.updateOne(
       {
         _id: req.body._id,
       },
       {
-        $set: { vendor_id: vendor._id },
+        $push: {
+          vendors: {
+            vendor_id: vendor._id,
+          },
+        },
       },
       {
         upsert: true,
-      }
-    , (err, response)=>{
-        if(err){
-            return err
-        }else{
-            res.status(200).json({message:"Vendor Assigned to user", response})
+      },
+      (err, response) => {
+        if (err) {
+          return err;
+        } else {
+          res
+            .status(200)
+            .json({ message: "Vendor Assigned to user", response });
         }
-    });
+      }
+    );
   } catch (error) {
     res.status(500).json(error);
   }
 }
 
-
-async function assignShopToVendor(req, res){
-   try{
-    let shop = await shopModel.findOne({_id:req.body._id})
-console.log(shop._id)
-    vendors.updateOne({_id:req.body.shop_id}, {$set:{shop_id:shop._id}},{
+async function assignShopToVendor(req, res) {
+  try {
+    let shop = await shopModel.findOne({ _id: req.body.shop_id });
+    console.log(shop._id);
+    vendors.updateOne(
+      { _id: req.body.vendor_id },
+      { $set: { shop_id: shop._id } },
+      {
         upsert: true,
-      }
-    ,(err, response)=>{
-        if(err){
-            res.status(501).json(err)
-        }else{
-            res.status(200).json({message:"Shop Assigned to vendor", data: response} )
-
+      },
+      (err, response) => {
+        if (err) {
+          res.status(501).json(err);
+        } else {
+          res
+            .status(200)
+            .json({ message: "Shop Assigned to vendor", data: response });
         }
-    })
-
-   }
-   catch(error){
-    res.status(501).json(error)
-   }
-
+      }
+    );
+  } catch (error) {
+    res.status(501).json(error);
+  }
 }
