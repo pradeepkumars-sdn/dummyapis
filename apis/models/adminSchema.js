@@ -3,7 +3,7 @@ var bcrypt = require("bcrypt");
 
 let schema = mongoose.Schema;
 
-let user = new schema(
+let admin = new schema(
   {
     name: {
       type: String,
@@ -30,22 +30,13 @@ let user = new schema(
     //     type: mongoose.Types.ObjectId,
     //         ref: "vendors",
     //   },
-
-    vendors:[
-      {
-        vendor_id: {
-          type: mongoose.Types.ObjectId,
-          ref: "vendors",
-        }
-      }
-    ]
   },
   {
-    collection: "user",
+    collection: "admin",
   }
 );
 
-user.pre("save", async function (next) {
+admin.pre("save", async function (next) {
   try {
     //console.log("this is called");
     const salt = await bcrypt.genSalt(10);
@@ -58,9 +49,9 @@ user.pre("save", async function (next) {
   }
 });
 
-user.methods.isValid = function(hashedpassword){
+admin.methods.isValid = function(hashedpassword){
     return  bcrypt.compareSync(hashedpassword, this.password);
 }
 
 
-module.exports = mongoose.model("user", user);
+module.exports = mongoose.model("admin", admin);
