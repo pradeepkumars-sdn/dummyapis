@@ -32,9 +32,13 @@ db.once('open', (req, res)=>
 // require routes 
 const routes = require('./apis/routes/userRoutes')
 const productsRoute = require('./apis/routes/productRoute')
+const adminRoute = require('./apis/routes/adminRoute')
+
 
 app.use('/api', routes)
 app.use('/api', productsRoute)
+app.use('/api/admin', adminRoute)
+
 
 
 
