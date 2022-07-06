@@ -15,6 +15,14 @@ router.post('/login', userController.login)
 router.get('/profile', auth, userController.loggedInUser)
 
 
+/// tutorial api routes for the testing using in the react test application
+
+router.post('/tutorials', userController.create)
+router.get('/tutorials', userController.list)
+router.delete('/tutorials', userController.deleteAll)
+
+
+
 
 
 

@@ -2,6 +2,8 @@ const bodyParser = require("body-parser");
 const userModel = require("../models/userSchema");
 const socialData = require("../models/userSocialData");
 const vendors = require("../models/associated_vendor");
+const tutorialModel = require("../models/tutorialsSchema");
+
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 
@@ -14,7 +16,10 @@ module.exports = {
   delete_user: delete_user,
   delete_vendor: delete_vendor,
   login: login,
-  loggedInUser:loggedInUser
+  loggedInUser:loggedInUser,
+  create:create,
+  list:list,
+  deleteAll:deleteAll
 };
 
 async function register(req, res) {
@@ -277,5 +282,45 @@ async function loggedInUser(req, res){
       }
 }
 
+
+///// tutorial list apis for the testing - starting point
+
+async function create(req, res){
+  let tutoriaData = new tutorialModel();
+  tutoriaData.title = req.body.title
+  tutoriaData.description = req.body.description
+ await tutoriaData.save().then((err, response)=>{
+  if(err){
+    return err
+  }else{
+    res.status(200).json({message:"Added", Data: response})
+  }
+  })
+
+}
+
+async function list(req, res){
+   tutorialModel.find({},(response, err)=>{
+    if(err){
+      res.status(201).json(err)
+    }else{
+      res.status(200).json({message:"Fetched", data:response})
+
+    }
+  })
+
+}
+
+
+async function deleteAll(req, res){
+  tutorialModel.deleteMany({}, (err, result)=>{
+    if(err){
+      res.status(201).json(err)
+    }else{
+      res.status(201).json({message:"Done", result})
+
+    }
+  })
+}
 
 
